@@ -1,1 +1,3 @@
-# TC-20251-1ACC0218A
+Trabajo Académico: DSL para Gestión de Horarios
+
+Proyecto de Trabajo Parcial/Final de Teroría de compiladores.
