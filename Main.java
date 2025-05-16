@@ -7,13 +7,13 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        CharStream input = CharStreams.fromFileName("TP_test.expr"); // o test.sched
+        CharStream input = CharStreams.fromFileName("TP_test.expr"); 
 
         HorariosLexer lexer = new HorariosLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         HorariosParser parser = new HorariosParser(tokens);
 
-        ParseTree tree = parser.program(); // cambia según tu regla inicial
+        ParseTree tree = parser.program(); 
 
         // Crear el visor del árbol
         TreeViewer viewer = new TreeViewer(Arrays.asList(parser.getRuleNames()), tree);
@@ -30,5 +30,10 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 800);
         frame.setVisible(true);
+
+        //Listener
+        HorariosParserBaseListenerImpl listener = new HorariosParserBaseListenerImpl();
+        ParseTreeWalker walker = new ParseTreeWalker();
+        walker.walk(listener, tree);
     }
 }
