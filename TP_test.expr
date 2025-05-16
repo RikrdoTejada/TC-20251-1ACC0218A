@@ -1,0 +1,13 @@
+profesor P001 { nombre: "Luis Perez" }
+
+aula A101 { capacidad: 40 }
+
+curso C101 {
+  codigo: "COMP101",
+  profesor: P001,
+  horas: 3
+}
+
+horario {
+  C101 @ A101 en LUNES 08:00-10:00;
+}
