@@ -1,0 +1,17 @@
+api "MiPrimeraAPI" {
+
+def get "/saludo" {
+    response : "Hola mundo"
+  },
+
+def post "/usuario" {
+    params : nombre, edad
+    response : "Usuario ${nombre} con edad ${edad} registrado."
+  },
+  
+def put "/usuario" {
+        params : nombre, edad
+        response : "Usuario ${nombre} actualizado a edad ${edad}."
+  }
+  
+}
