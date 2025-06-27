@@ -12,6 +12,11 @@ def post "/usuario" {
 def put "/usuario" {
         params : nombre, edad
         response : "Usuario ${nombre} actualizado a edad ${edad}."
-  }
+  },
+
+def post "/producto" {
+  params: ID, nombre, precio, unidades
+  response: "El producto ${nombre} con codigo ${ID} de precio S/ ${precio}, tiene un stock de ${unidades}"
+}  
   
 }

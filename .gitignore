@@ -11,6 +11,7 @@
 *.pyc
 *.o
 *.obj
+*.ll
 
 # Ignora archivos generados si los regeneras cada vez
 /output/main.cpp
