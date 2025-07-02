@@ -79,7 +79,7 @@ public:
       first = false;
     }
     handlerBuffer << ");\n";
-    handlerBuffer << "      mg_http_reply(c, 200, \"Content-Type: application/json\\r\\n\", \"%s\\n\", response);\n";
+    handlerBuffer << "      mg_http_reply(c, 200, "<< "\"Content-Type: application/json\\r\\n"<< "Access-Control-Allow-Origin: http://127.0.0.1:5500\\r\\n\", "<< "\"%s\\n\", response);\n";
     handlerBuffer << "      return;\n";
     handlerBuffer << "    }\n";
 
@@ -104,6 +104,11 @@ public:
     jsonStream << "}}";
 
     std::string response = jsonStream.str();
+    
+    // Guarda el json del post en un archivo
+    std::ofstream file("/compilers/TF/data/api_data.txt", std::ios::app);
+    file << response << std::endl;
+
     Value *fmt = irBuilder->CreateGlobalStringPtr(response.c_str());
 
     FunctionCallee mallocFn = module->getOrInsertFunction("malloc",
@@ -120,6 +125,43 @@ public:
       args.push_back(&arg);
     }
     irBuilder->CreateCall(sprintfFn, args);
+
+// Declarar fopen, fprintf, fclose
+    FunctionCallee fopenFn = module->getOrInsertFunction("fopen",
+      FunctionType::get(PointerType::getUnqual(Type::getInt8Ty(context)), {
+        PointerType::getUnqual(Type::getInt8Ty(context)),
+        PointerType::getUnqual(Type::getInt8Ty(context))
+      }, false));
+
+    FunctionCallee fprintfFn = module->getOrInsertFunction("fprintf",
+      FunctionType::get(Type::getInt32Ty(context), {
+        PointerType::getUnqual(Type::getInt8Ty(context)),
+        PointerType::getUnqual(Type::getInt8Ty(context))
+      }, true));
+
+    FunctionCallee fcloseFn = module->getOrInsertFunction("fclose",
+      FunctionType::get(Type::getInt32Ty(context), {
+        PointerType::getUnqual(Type::getInt8Ty(context))
+      }, false));
+
+    // Punteros a "data.txt" y modo "a"
+    Value *fileName = irBuilder->CreateGlobalStringPtr("/compilers/TF/data/api_data.txt");
+    Value *mode = irBuilder->CreateGlobalStringPtr("a");
+
+    // Abrir el archivo
+    Value *fileHandle = irBuilder->CreateCall(fopenFn, {fileName, mode});
+
+    // Crear el formato para fprintf
+    Value *fmtLine = irBuilder->CreateGlobalStringPtr("%s\n");
+
+    // Escribir la línea con fprintf(file, "%s\n", bufferPtr)
+    irBuilder->CreateCall(fprintfFn, {fileHandle, fmtLine, bufferPtr});
+
+    // Cerrar el archivo
+    irBuilder->CreateCall(fcloseFn, {fileHandle});
+
+    // ==== Fin del bloque para guardar en archivo ==
+
     irBuilder->CreateRet(bufferPtr);
 
     return nullptr;
@@ -196,3 +238,4 @@ public:
         << "}\n";
   }
 };
+
