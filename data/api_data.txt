@@ -1,0 +1,13 @@
+{
+  "usuario": [
+    {
+      "_id": "1",
+      "apellido": "Samanamud",
+      "correo": "karim@mail.com",
+      "edad": "21",
+      "nombre": "Karim",
+      "pais": "Peru",
+      "password": "1234"
+    }
+  ]
+}

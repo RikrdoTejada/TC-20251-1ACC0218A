@@ -1,0 +1,22 @@
+api "MiPrimeraAPI" {
+
+def post "/usuario" {
+    params : _id, nombre, apellido, edad, pais, correo, password
+    response : "Usuario ${nombre} con email ${correo}, se ha registrado correctamente."
+  },
+
+def get "/usuario" {
+    search :  %usuario with correo, password
+    response: "Usuario encontrado"
+  },
+  
+def put "/usuario" {
+    params : nombre, edad
+    response : "Usuario ${nombre} actualizado a edad ${edad}."
+  },
+
+def post "/producto" {
+  params: ID, nombreP, precio, unidades
+  response: "El producto ${nombreP} con codigo ${ID} de precio S/ ${precio}, tiene un stock de ${unidades}"
+}  
+}

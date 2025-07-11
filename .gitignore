@@ -1,0 +1,24 @@
+# Ignora binarios y builds
+/build/
+/output/*.exe
+/output/servidor
+/.vscode/
+/src/.antlr/
+# Ignora archivos intermedios
+*.class
+*.tokens
+*.interp
+*.pyc
+*.o
+*.obj
+*.ll
+
+# Ignora archivos generados si los regeneras cada vez
+/output/main.cpp
+
+# No ignores los tuyos
+!src/ApiGenerator.g4
+!src/ApiGeneratorDriver.h
+!src/ApiCppGeneratorVisitor.h
+!src/main.cpp
+!input/pruebita.ApiGenerator
