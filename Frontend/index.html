@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Bienvenido a MiniRed</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
+      padding: 2rem;
+      display: flex;
+      gap: 2rem;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    h2 {
+      margin-bottom: 1rem;
+    }
+    input, button {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    button {
+      background: #1877f2;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #155ab6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Registro -->
+    <div>
+      <h2>Registro</h2>
+      <form id="registroForm">
+        <input name="_id" placeholder="ID" required>
+        <input name="nombre" placeholder="Nombre" required>
+        <input name="apellido" placeholder="Apellido" required>
+        <input name="edad" placeholder="Edad" required>
+        <input name="pais" placeholder="País" required>
+        <input name="correo" placeholder="Correo" required>
+        <input name="password" placeholder="Contraseña" type="password" required>
+        <button type="submit">Registrarse</button>
+      </form>
+    </div>
+
+    <!-- Login -->
+    <div>
+      <h2>Login</h2>
+      <form id="loginForm">
+        <input name="correo" placeholder="Correo" required>
+        <input name="password" placeholder="Contraseña" type="password" required>
+        <button type="submit">Ingresar</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const apiUrl = "http://localhost:8080";
+
+    // Registro
+    document.getElementById("registroForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      const form = new FormData(e.target);
+      const params = new URLSearchParams(form);
+
+      const res = await fetch(`${apiUrl}/usuario`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: params
+      });
+
+      if (res.ok) {
+        alert("Usuario registrado correctamente");
+        e.target.reset();
+      } else {
+        alert("Error en registro");
+      }
+    });
+
+    // Login
+    document.getElementById("loginForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      const form = new FormData(e.target);
+      const correo = form.get("correo");
+      const password = form.get("password");
+
+      const res = await fetch(`${apiUrl}/usuario?correo=${correo}&password=${password}`);
+      const data = await res.json();
+      
+      if (data && Object.keys(data).length > 0) {
+        localStorage.setItem("usuario", JSON.stringify(data));
+        window.location.href = "menu.html";
+      } else {
+        alert("Credenciales incorrectas");
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>MiniRed - Perfil</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+    }
+    header {
+      background-color: #1877f2;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .profile-card {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 400px;
+    }
+    .profile-card h2 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    .profile-item {
+      margin-bottom: 0.5rem;
+    }
+    .logout-btn {
+      margin-top: 1.5rem;
+      background: #e53935;
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .logout-btn:hover {
+      background: #c62828;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>MiniRed - Perfil de Usuario</h1>
+  </header>
+  <div class="container">
+    <div class="profile-card">
+      <h2 id="nombreCompleto">Usuario</h2>
+      <div class="profile-item"><strong>ID:</strong> <span id="_id"></span></div>
+      <div class="profile-item"><strong>Edad:</strong> <span id="edad"></span></div>
+      <div class="profile-item"><strong>Correo:</strong> <span id="correo"></span></div>
+      <div class="profile-item"><strong>País:</strong> <span id="pais"></span></div>
+      <button class="logout-btn" onclick="logout()">Cerrar sesión</button>
+    </div>
+  </div>
+
+  <script>
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+  
+    if (!usuario) {
+      alert("No hay usuario logueado.");
+      window.location.href = "index.html";
+    } else {
+      const datos = usuario;
+
+      document.getElementById("nombreCompleto").textContent = datos.nombre + " " + datos.apellido;
+      document.getElementById("_id").textContent = datos._id;
+      document.getElementById("edad").textContent = datos.edad;
+      document.getElementById("correo").textContent = datos.correo;
+      document.getElementById("pais").textContent = datos.pais;
+    }
+
+    function logout() {
+      localStorage.removeItem("usuario");
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
