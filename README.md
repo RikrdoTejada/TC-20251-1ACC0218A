@@ -14,4 +14,4 @@ clang++ -std=c++17 -Ilib output/main.cpp lib/mongoose.c -o output/servidor \
 
 #### En caso no exista la carpeta data y output, crearlas
 
-### Usar live server desde el index.html para probar el server
+### Usar live server desde el index.html para probar el server (desde la pc, no docker)
