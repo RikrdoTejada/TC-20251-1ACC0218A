@@ -13,4 +13,3 @@ clang++ -std=c++17 -Ilib output/main.cpp lib/mongoose.c -o output/servidor \
 
 
 #### En caso no exista la carpeta data, crearla
-curl -X POST http://localhost:8080/usuario -d "nombre=Karim&edad=21"
